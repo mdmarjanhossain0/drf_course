@@ -1,6 +1,19 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from myapp.api.serializers import ArticleSerializer
+from myapp.api.serializers import ArticleSerializer, ArticleBase64Serilizer
+
+
+@api_view(["POST"])
+def base64_image_upload_api_view(request):
+    if request.method == "POST":
+        data = request.data
+        serializer = ArticleBase64Serilizer(data=data)
+
+        if serializer.is_valid():
+            article = serializer.save()
+            data = serializer.data
+            return Response(data=data)
+        return Response(serializer.errors, status=400)
 
 
 @api_view(["POST"])
