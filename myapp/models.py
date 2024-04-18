@@ -15,3 +15,18 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+class Image(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='book_images/')
+
+class Book(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    images = models.ManyToManyField(Image)
+
+
+class ResizableImage(models.Model):
+    title = models.CharField(max_length=255)
+    original_image = models.ImageField(upload_to='original_images/')
+    resized_image = models.ImageField(upload_to='resized_images/', null=True, blank=True)
